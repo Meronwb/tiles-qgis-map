@@ -34,7 +34,7 @@
   <div id="menu">
     <button onclick="toggleLayer('basemap-layer')">Basemap</button>
     <button onclick="toggleLayer('thematic-layer')">Data</button>
-    <button onclick="toggleLayer('combined-layer')">Basemap&Data</button>
+    <button onclick="toggleLayer('combined-layer')">Basemap & Data</button>
   </div>
 
   <div id="map"></div>
@@ -55,12 +55,12 @@
     map.on('load', () => {
       map.addSource('basemap', {
         type: 'raster',
-        tiles: ['basemap/{z}/{x}/{y}.png']
+        tiles: ['basemap/{z}/{x}/{y}.png'],
         tileSize: 256
       });
 
       map.addLayer({
-        id: 'thematic-layer',
+        id: 'basemap-layer',
         type: 'raster',
         source: 'basemap',
         layout: { visibility: 'visible' }
@@ -81,7 +81,7 @@
 
       map.addSource('combined', {
         type: 'raster',
-        tiles: ['assets/combined/{z}/{x}/{y}.png'],
+        tiles: ['combined/{z}/{x}/{y}.png'],
         tileSize: 256
       });
 
