@@ -33,7 +33,7 @@
 <body>
   <div id="menu">
     <button onclick="toggleLayer('basemap-layer')">Basemap</button>
-    <button onclick="toggleLayer('heatmap-layer')">Data</button>
+    <button onclick="toggleLayer('thematic-layer')">Data</button>
     <button onclick="toggleLayer('combined-layer')">Basemap&Data</button>
   </div>
 
@@ -73,7 +73,7 @@
       });
 
       map.addLayer({
-        id: 'heatmap-layer',
+        id: 'thematic-layer',
         type: 'raster',
         source: 'heatmap',
         layout: { visibility: 'none' }
