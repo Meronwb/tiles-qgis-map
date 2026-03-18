@@ -15,6 +15,11 @@ body { margin:0; padding:0; }
 </head>
 
 <body>
+<div id="menu" style="position:absolute; top:10px; left:10px; background:white; padding:10px;">
+<button onclick="toggleLayer('basemap-layer')">Basemap</button>
+<button onclick="toggleLayer('heatmap-layer')">Heatmap</button>
+<button onclick="toggleLayer('combined-layer')">Combined</button>
+</div>
 
 <div id="map"></div>
 
@@ -73,6 +78,15 @@ map.on('load', () => {
 
 });
 </script>
+function toggleLayer(layer) {
+    const visibility = map.getLayoutProperty(layer, 'visibility');
+
+    if (visibility === 'visible') {
+        map.setLayoutProperty(layer, 'visibility', 'none');
+    } else {
+        map.setLayoutProperty(layer, 'visibility', 'visible');
+    }
+}
 
 </body>
 </html>
