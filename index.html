@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>My Tile Map</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+
+<style>
+body { margin:0; padding:0; }
+#map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+
+<body>
+
+<div id="map"></div>
+
+<script>
+mapboxgl.accessToken = 'YOUR_MAPBOX_TOKEN';
+
+const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v10',
+    center: [-122.3, 47.6],
+    zoom: 10
+});
+
+map.on('load', () => {
+
+    // Basemap tiles
+    map.addSource('basemap', {
+        type: 'raster',
+        tiles: ['assets/basemap/{z}/{x}/{y}.png'],
+        tileSize: 256
+    });
+
+    map.addLayer({
+        id: 'basemap-layer',
+        type: 'raster',
+        source: 'basemap'
+    });
+
+    // Heatmap tiles
+    map.addSource('heatmap', {
+        type: 'raster',
+        tiles: ['assets/heatmap/{z}/{x}/{y}.png'],
+        tileSize: 256
+    });
+
+    map.addLayer({
+        id: 'heatmap-layer',
+        type: 'raster',
+        source: 'heatmap',
+        layout: { visibility: 'none' }
+    });
+
+    // Combined tiles
+    map.addSource('combined', {
+        type: 'raster',
+        tiles: ['assets/combined/{z}/{x}/{y}.png'],
+        tileSize: 256
+    });
+
+    map.addLayer({
+        id: 'combined-layer',
+        type: 'raster',
+        source: 'combined',
+        layout: { visibility: 'none' }
+    });
+
+});
+</script>
+
+</body>
+</html>
