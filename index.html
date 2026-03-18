@@ -55,27 +55,27 @@
     map.on('load', () => {
       map.addSource('basemap', {
         type: 'raster',
-        tiles: ['basemap/{z}/{x}/{y}.png'],
-        tileSize: 256
-      });
-
-      map.addLayer({
-        id: 'basemap-layer',
-        type: 'raster',
-        source: 'basemap',
-        layout: { visibility: 'visible' }
-      });
-
-      map.addSource('heatmap', {
-        type: 'raster',
-        tiles: ['assets/heatmap/{z}/{x}/{y}.png'],
+        tiles: ['basemap/{z}/{x}/{y}.png']
         tileSize: 256
       });
 
       map.addLayer({
         id: 'thematic-layer',
         type: 'raster',
-        source: 'heatmap',
+        source: 'basemap',
+        layout: { visibility: 'visible' }
+      });
+
+      map.addSource('thematic', {
+        type: 'raster',
+        tiles: ['thematic/{z}/{x}/{y}.png'],
+        tileSize: 256
+      });
+
+      map.addLayer({
+        id: 'thematic-layer',
+        type: 'raster',
+        source: 'thematic',
         layout: { visibility: 'none' }
       });
 
