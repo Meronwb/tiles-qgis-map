@@ -2,15 +2,24 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>My Tile Map</title>
+  <title>Libraries and Parks Tile Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
 
   <style>
-    body { margin: 0; padding: 0; }
-    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
 
     #menu {
       position: absolute;
@@ -18,34 +27,61 @@
       left: 10px;
       z-index: 1;
       background: white;
-      padding: 10px;
+      padding: 12px;
       border-radius: 6px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+      font-family: Arial, sans-serif;
+    }
+
+    #menu h3 {
+      margin: 0 0 10px 0;
+      font-size: 16px;
+    }
+
+    #menu p {
+      margin: 0 0 10px 0;
+      font-size: 12px;
+      line-height: 1.4;
     }
 
     #menu button {
       display: block;
-      margin: 5px 0;
-      width: 120px;
+      margin: 6px 0;
+      width: 160px;
+      padding: 8px;
+      border: none;
+      background: #f2f2f2;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    #menu button:hover {
+      background: #dddddd;
     }
   </style>
 </head>
 
 <body>
   <div id="menu">
-    <button onclick="toggleLayer('basemap-layer')">Basemap</button>
-    <button onclick="toggleLayer('thematic-layer')">Data</button>
-    <button onclick="toggleLayer('combined-layer')">Basemap & Data</button>
+    <h3>Seattle Libraries & Parks</h3>
+    <p>Select a tile set:</p>
+
+    <button onclick="showLayer('basemap-layer')">Basemap</button>
+    <button onclick="showLayer('thematic-layer')">Thematic</button>
+    <button onclick="showLayer('combined-layer')">Combined</button>
+    <button onclick="showLayer('theme-layer')">Theme Map</button>
   </div>
 
   <div id="map"></div>
 
   <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoibWVyb253YiIsImEiOiJjbWt5eXZtZmIwZTRiM2RuM2NmMW51NTJsIn0.Ed7Mtil9vLyQb-7MMOBfiQ';
+    mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
 
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/light-v10',
-      center: [-122.3, 47.6],
+      center: [-122.3321, 47.6062],
       zoom: 10
     });
 
@@ -55,7 +91,7 @@
     map.on('load', () => {
       map.addSource('basemap', {
         type: 'raster',
-        tiles: ['basemap/{z}/{x}/{y}.png'],
+        tiles: ['assets/basemap/{z}/{x}/{y}.png'],
         tileSize: 256
       });
 
@@ -63,12 +99,14 @@
         id: 'basemap-layer',
         type: 'raster',
         source: 'basemap',
-        layout: { visibility: 'visible' }
+        layout: {
+          visibility: 'visible'
+        }
       });
 
       map.addSource('thematic', {
         type: 'raster',
-        tiles: ['thematic/{z}/{x}/{y}.png'],
+        tiles: ['assets/thematic/{z}/{x}/{y}.png'],
         tileSize: 256
       });
 
@@ -76,12 +114,14 @@
         id: 'thematic-layer',
         type: 'raster',
         source: 'thematic',
-        layout: { visibility: 'none' }
+        layout: {
+          visibility: 'none'
+        }
       });
 
       map.addSource('combined', {
         type: 'raster',
-        tiles: ['combined/{z}/{x}/{y}.png'],
+        tiles: ['assets/combined/{z}/{x}/{y}.png'],
         tileSize: 256
       });
 
@@ -89,17 +129,43 @@
         id: 'combined-layer',
         type: 'raster',
         source: 'combined',
-        layout: { visibility: 'none' }
+        layout: {
+          visibility: 'none'
+        }
+      });
+
+      map.addSource('theme', {
+        type: 'raster',
+        tiles: ['assets/theme/{z}/{x}/{y}.png'],
+        tileSize: 256
+      });
+
+      map.addLayer({
+        id: 'theme-layer',
+        type: 'raster',
+        source: 'theme',
+        layout: {
+          visibility: 'none'
+        }
       });
     });
 
-    function toggleLayer(layer) {
-      const visibility = map.getLayoutProperty(layer, 'visibility');
+    function showLayer(selectedLayer) {
+      const layers = [
+        'basemap-layer',
+        'thematic-layer',
+        'combined-layer',
+        'theme-layer'
+      ];
 
-      if (visibility === 'visible') {
-        map.setLayoutProperty(layer, 'visibility', 'none');
-      } else {
-        map.setLayoutProperty(layer, 'visibility', 'visible');
+      for (let i = 0; i < layers.length; i++) {
+        if (map.getLayer(layers[i])) {
+          map.setLayoutProperty(layers[i], 'visibility', 'none');
+        }
+      }
+
+      if (map.getLayer(selectedLayer)) {
+        map.setLayoutProperty(selectedLayer, 'visibility', 'visible');
       }
     }
   </script>
