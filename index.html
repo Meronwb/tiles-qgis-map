@@ -92,7 +92,9 @@
       map.addSource('basemap', {
         type: 'raster',
         tiles: ['basemap/{z}/{x}/{y}.png'],
-        tileSize: 256
+        tileSize: 256,
+        minzoom: 0,
+        maxzoom: 22
       });
 
       map.addLayer({
@@ -104,11 +106,13 @@
         }
       });
 
-      map.addSource('thematic', {
-        type: 'raster',
-        tiles: ['thematic/{z}/{x}/{y}.png'],
-        tileSize: 256
-      });
+     map.addSource('thematic', {
+       type: 'raster',
+       tiles: ['thematic/{z}/{x}/{y}.png'],
+       tileSize: 256,
+       minzoom: 0,
+       maxzoom: 22
+     });
 
       map.addLayer({
         id: 'thematic-layer',
@@ -122,7 +126,9 @@
       map.addSource('combined', {
         type: 'raster',
         tiles: ['combined/{z}/{x}/{y}.png'],
-        tileSize: 256
+        tileSize: 256,
+        minzoom: 0,
+        maxzoom: 22
       });
 
       map.addLayer({
