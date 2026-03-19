@@ -76,7 +76,7 @@
   <div id="map"></div>
 
   <script>
-    mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWVyb253YiIsImEiOiJjbWt5eXZtZmIwZTRiM2RuM2NmMW51NTJsIn0.Ed7Mtil9vLyQb-7MMOBfiQ';
 
     const map = new mapboxgl.Map({
       container: 'map',
@@ -91,7 +91,7 @@
     map.on('load', () => {
       map.addSource('basemap', {
         type: 'raster',
-        tiles: ['assets/basemap/{z}/{x}/{y}.png'],
+        tiles: ['basemap/{z}/{x}/{y}.png'],
         tileSize: 256
       });
 
@@ -106,7 +106,7 @@
 
       map.addSource('thematic', {
         type: 'raster',
-        tiles: ['assets/thematic/{z}/{x}/{y}.png'],
+        tiles: ['thematic/{z}/{x}/{y}.png'],
         tileSize: 256
       });
 
@@ -121,7 +121,7 @@
 
       map.addSource('combined', {
         type: 'raster',
-        tiles: ['assets/combined/{z}/{x}/{y}.png'],
+        tiles: ['combined/{z}/{x}/{y}.png'],
         tileSize: 256
       });
 
@@ -136,7 +136,7 @@
 
       map.addSource('theme', {
         type: 'raster',
-        tiles: ['assets/theme/{z}/{x}/{y}.png'],
+        tiles: ['theme/{z}/{x}/{y}.png'],
         tileSize: 256
       });
 
